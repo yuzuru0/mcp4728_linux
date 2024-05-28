@@ -39,7 +39,7 @@ typedef union
 		unsigned int DAC_CH:2;
 		unsigned int COMMAND:5;
 
-		unsgined int UNUSED:8;
+		unsigned int UNUSED:8;
 	}config;
 }mcp4728_config_data;
 
