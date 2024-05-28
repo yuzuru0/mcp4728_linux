@@ -16,10 +16,8 @@ typedef union
 		unsigned int UDAC:1;
 		unsigned int DAC_CH:2;
 		unsigned int COMMAND:5;
-
-		unsigned int ADDRESS:8;
 	}config;
-}mcp4728_config;
+}mcp4728_config_data;
 
 
 #endif
