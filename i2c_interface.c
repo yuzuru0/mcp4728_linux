@@ -79,7 +79,7 @@ int i2c_write(unsigned char dev_addr, unsigned char reg_addr, unsigned char* dat
 
 	// 送信データのエンディアン反転
 	for(i=0;i<length;i++)
-		memcpy(&buff[i+1], &data[length-i-1],1);
+		memcpy(&buff[i+1], &data[i],1);
 
 	fd = open(I2C_DEV_NAME, O_RDWR);
 	if(fd == -1)
