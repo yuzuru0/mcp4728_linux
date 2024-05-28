@@ -5,18 +5,15 @@
 int main(void)
 {
 	unsigned char dev_addr = 0x60;
-	unsigned char reg_addr = 0xC0;
+	unsigned char reg_addr = 0x58;
 
 	mcp4728_config_data mcp4728;
 
-	mcp4728.config.COMMAND = SINGLE_WRITE;
-	mcp4728.config.DAC_CH = CH_A;
-	mcp4728.config.UDAC = EN_LATCH;
 	mcp4728.config.VREF = VREF_INTERNAL;
 	mcp4728.config.PD = PD_NORMAL;
 	mcp4728.config.Gx = GAIN_X2;
 
-	mcp4728.config.DAC_DATA = 0x0FFF;
+	mcp4728.config.DAC_DATA = 0x07FF;
 
 	printf("%x - %x %x %x %d\n",mcp4728.i2c_data, mcp4728.byte[0],mcp4728.byte[1],mcp4728.byte[2], sizeof(mcp4728.byte));
 
