@@ -1,6 +1,8 @@
 #ifndef __MCP4728_H__
 #define __MCP4728_H__
 
+#define MCP4728_ADDR 0x60
+
 #define SINGLE_WRITE 0x0B
 
 #define ADDRESS_A 0x58
@@ -25,6 +27,9 @@
 
 #define GAIN_X2 0x01
 #define GAIN_X1 0x00
+
+#define DAC_MAX_DATA 0x0FFF
+#define DAC_MAX_VOLT 4.096	//	内部Vref, 出力2倍ゲイン
 
 
 
