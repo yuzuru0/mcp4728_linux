@@ -15,6 +15,12 @@ int output_da(int ch, float voltage)
 		return -1;
 	}
 
+	if(voltage < DAC_MIN_VOLT || voltage> DAC_MAX_VOLT)
+	{
+		ret = -2;
+		printf("DACの出力範囲を超えています\n");
+	}
+
 	reg_addr = DAC_ADDRESS_BASE || ch<<1;
 
 	mcp4728.config.VREF = VREF_INTERNAL;
@@ -35,7 +41,6 @@ int output_da(int ch, float voltage)
 int main(void)
 {
 
-	output_da(CH_A, 0.0);
-
+	output_da(CH_A, 4.096);
 	return 0;
 }

@@ -31,6 +31,7 @@
 
 #define DAC_MAX_DATA 0x0FFF
 #define DAC_MAX_VOLT 4.096	//	内部Vref, 出力2倍ゲイン
+#define DAC_MIN_VOLT 0.0
 
 
 
