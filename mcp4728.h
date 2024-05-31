@@ -5,10 +5,11 @@
 
 #define SINGLE_WRITE 0x0B
 
-#define ADDRESS_A 0x58
-#define ADDRESS_B 0x5A
-#define ADDRESS_C 0x5C
-#define ADDRESS_D 0x5E
+#define DAC_ADDRESS_A 0x58
+#define DAC_ADDRESS_B 0x5A
+#define DAC_ADDRESS_C 0x5C
+#define DAC_ADDRESS_D 0x5E
+#define DAC_ADDRESS_BASE 0x58
 
 #define CH_A 0x00
 #define CH_B 0x01
