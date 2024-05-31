@@ -3,6 +3,11 @@
 
 #define SINGLE_WRITE 0x0B
 
+#define ADDRESS_A 0x58
+#define ADDRESS_B 0x5A
+#define ADDRESS_C 0x5C
+#define ADDRESS_D 0x5E
+
 #define CH_A 0x00
 #define CH_B 0x01
 #define CH_C 0x02

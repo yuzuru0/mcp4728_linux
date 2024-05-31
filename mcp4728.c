@@ -5,7 +5,7 @@
 int main(void)
 {
 	unsigned char dev_addr = 0x60;
-	unsigned char reg_addr = 0x58;
+	unsigned char reg_addr = ADDRESS_A;
 
 	mcp4728_config_data mcp4728;
 
