@@ -50,6 +50,7 @@ typedef union
 	}config;
 }mcp4728_config_data;
 
+int output_da(int ch, float voltage);
 
 #endif
 
