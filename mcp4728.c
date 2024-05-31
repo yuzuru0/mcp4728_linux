@@ -19,14 +19,14 @@ int output_da(int ch, float voltage)
 	{
 		ret = -2;
 		voltage = DAC_MIN_VOLT;
-		printf("DACの出力範囲を超えています\n");
+		//printf("DACの出力範囲を超えています\n");
 	}
 
 	if(voltage > DAC_MAX_VOLT)
 	{
 		ret = -3;
 		voltage = DAC_MAX_VOLT;
-		printf("DACの出力範囲を超えています\n");
+		//printf("DACの出力範囲を超えています\n");
 	}
 
 	reg_addr = DAC_ADDRESS_BASE | ch<<1;
@@ -49,6 +49,6 @@ int output_da(int ch, float voltage)
 int main(void)
 {
 
-	output_da(CH_A, 0.0);
+	output_da(CH_B, 2.0);
 	return 0;
 }
