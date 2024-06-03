@@ -39,9 +39,7 @@ int output_da(int ch, float voltage)
 
 
 	printf("%x %x \n",reg_addr, mcp4728.i2c_data );
-
-
-//	i2c_write(dev_addr, reg_addr, mcp4728.byte, sizeof(mcp4728.byte)); 
+	i2c_write(dev_addr, reg_addr, mcp4728.byte, sizeof(mcp4728.byte)); 
 
 	return ret;
 
@@ -49,6 +47,6 @@ int output_da(int ch, float voltage)
 int main(void)
 {
 
-	output_da(CH_B, 2.0);
+	output_da(CH_A, 2.0);
 	return 0;
 }
