@@ -39,7 +39,7 @@ int output_da(int ch, float voltage)
 	mcp4728.config.DAC_DATA = (int)(voltage * DAC_MAX_DATA / DAC_MAX_VOLT);
 
 
-	printf("%x %x \n",reg_addr, mcp4728.i2c_data );
+//	printf("%x %x \n",reg_addr, mcp4728.i2c_data );
 	i2c_write(dev_addr, reg_addr, mcp4728.byte, sizeof(mcp4728.byte)); 
 
 	return ret;
