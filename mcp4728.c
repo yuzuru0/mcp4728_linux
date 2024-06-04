@@ -44,7 +44,6 @@ int output_da(int ch, float voltage)
 		buf[i] = mcp4728.byte[3-1-i];
 
 
-//	printf("%x %x \n",reg_addr, mcp4728.i2c_data );
 	i2c_write(dev_addr, buf, sizeof(buf)); 
 
 	return ret;
@@ -88,10 +87,6 @@ int output_da_fast(float voltage[])
 			buf[j*2 +i] = data[j].byte[1-i];
 	}
 
-	for(i=0;i<8;i++)
-		printf("%x ",buf[i]);
-
-	printf("\n");
 
 	i2c_write(dev_addr,buf,sizeof(buf));
 
@@ -101,18 +96,19 @@ int output_da_fast(float voltage[])
 int main(int argc, char *argv[])
 {
 	float voltage[4];
+	float single;
 	int ch;
 	char *endptr;
 
 //	ch = strtol(argv[1], &endptr,10);
-//	voltage =strtof(argv[2],&endptr);
+//	single  =strtof(argv[2],&endptr);
+//	output_da(ch,voltage);
 
-	voltage[CH_A] = 0.0;
-	voltage[CH_B] = 0.0;
-	voltage[CH_C] = 0.0;
-	voltage[CH_D] = 0.0;
+	voltage[CH_A] = 3.0;
+	voltage[CH_B] = 2.0;
+	voltage[CH_C] = 1.0;
+	voltage[CH_D] = 0.5;
 
 	output_da_fast(voltage);
-//	output_da(1,0);
 	return 0;
 }
