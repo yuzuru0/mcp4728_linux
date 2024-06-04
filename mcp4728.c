@@ -39,6 +39,7 @@ int output_da(int ch, float voltage)
 
 	mcp4728.config.DAC_DATA = (int)(voltage * DAC_MAX_DATA / DAC_MAX_VOLT);
 
+	// エンディアン変換
 	for(i=0;i<3;i++)
 		buf[i] = mcp4728.byte[3-1-i];
 
@@ -52,15 +53,15 @@ int output_da(int ch, float voltage)
 
 int output_da_fast(float voltage[])
 {
-	int ret=0,i;
+	int ret=0,i,j;
 	unsigned char dev_addr = MCP4728_ADDR;
-	unsigned char reg_addr;
-	fastmode_data data;
-/*
+	fastmode_data data[4];
+	unsigned char buf[8];
+
 	for(i=0;i<MAX_CH; i++)
 	{
-		data.ch[i].config.command=0;
-		data.ch[i].config.PD=0;
+		data[i].config.command=0;
+		data[i].config.PD=0;
 
 		if(voltage[i] < DAC_MIN_VOLT)
 		{
@@ -76,25 +77,23 @@ int output_da_fast(float voltage[])
 			//printf("DACの出力範囲を超えています\n");
 		}
 
-		data.ch[i].config.DAC_DAT = (int)(voltage[i]* DAC_MAX_DATA / DAC_MAX_VOLT);
+		data[i].config.DAC_DAT = (int)(voltage[i]* DAC_MAX_DATA / DAC_MAX_VOLT);
 	}
-*/
-
-	data.ch[CH_A].config.command=0;
-	data.ch[CH_A].config.PD=0;
-	data.ch[CH_A].config.DAC_DAT = 0xfff;
 
 
-	data.ch[CH_B].config.command=0;
-	data.ch[CH_B].config.PD=0;
-	data.ch[CH_B].config.DAC_DAT = 0x7ff;
+	for(j=0;j<MAX_CH;j++)
+	{
+		// エンディアン変換しながら全送信データ結合
+		for(i=0;i<2;i++)
+			buf[j*2 +i] = data[j].byte[1-i];
+	}
 
-	printf("%lx\t",data);
 	for(i=0;i<8;i++)
-		printf("%x ",data.byte[i]);
+		printf("%x ",buf[i]);
 
 	printf("\n");
 
+	i2c_write(dev_addr,buf,sizeof(buf));
 
 	return ret;
 }
@@ -108,12 +107,12 @@ int main(int argc, char *argv[])
 //	ch = strtol(argv[1], &endptr,10);
 //	voltage =strtof(argv[2],&endptr);
 
-	voltage[CH_A] = 5.0;
-	voltage[CH_B] = 4.0;
-	voltage[CH_C] = 3.0;
-	voltage[CH_D] = 2.0;
+	voltage[CH_A] = 0.0;
+	voltage[CH_B] = 0.0;
+	voltage[CH_C] = 0.0;
+	voltage[CH_D] = 0.0;
 
-//	output_da_fast(voltage);
-	output_da(1,0);
+	output_da_fast(voltage);
+//	output_da(1,0);
 	return 0;
 }
