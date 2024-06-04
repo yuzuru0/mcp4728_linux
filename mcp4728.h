@@ -33,7 +33,7 @@
 #define DAC_MAX_VOLT 4.096	//	内部Vref, 出力2倍ゲイン
 #define DAC_MIN_VOLT 0.0
 
-
+#define MAX_CH 4
 
 typedef union
 {
@@ -55,9 +55,9 @@ typedef union
 	unsigned short input_register;
 	struct
 	{
-		unsigned short command:2;
-		unsigned short PD:2;
 		unsigned short DAC_DAT:12;
+		unsigned short PD:2;
+		unsigned short command:2;
 	}config;
 }ch_dat;
 
@@ -69,7 +69,7 @@ typedef union
 }fastmode_data;
 
 int output_da(int ch, float voltage);
-int output_da_fast(float ch_a, float ch_b, float ch_c, float ch_d);
+int output_da_fast(float voltage[]);
 
 #endif
 

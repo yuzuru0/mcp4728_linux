@@ -45,6 +45,23 @@ int output_da(int ch, float voltage)
 	return ret;
 
 }
+
+int output_da_fast(float ch_a, float ch_b, float ch_c, float ch_d)
+{
+	int ret=0,i;
+	unsigned char dev_addr = MCP4728_ADDR;
+	unsigned char reg_addr;
+	fastmode_data data;
+
+	for(i=0;i<MAX_CH; i++)
+	{
+		data.ch[i].config.command=0;
+		data.ch[i].config.PD=0;
+	}
+
+	return ret;
+}
+
 int main(int argc, char *argv[])
 {
 	float voltage;
