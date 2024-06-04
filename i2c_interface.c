@@ -20,11 +20,6 @@ int i2c_read(unsigned char dev_addr, unsigned char reg_addr, unsigned char* data
 	struct i2c_msg message[2];
 	struct i2c_rdwr_ioctl_data i2c_data;
 
-	unsigned char* buff;
-
-	buff = (unsigned char *)malloc(length);
-
-	
 
 	fd = open(I2C_DEV_NAME, O_RDWR);
 	if(fd == -1)
@@ -41,7 +36,7 @@ int i2c_read(unsigned char dev_addr, unsigned char reg_addr, unsigned char* data
 	message[1].addr = dev_addr;
 	message[1].flags = I2C_M_RD;
 	message[1].len = length;
-	message[1].buf = buff;
+	message[1].buf = data;
 
 	i2c_data.msgs = message;
 	i2c_data.nmsgs = 2;
@@ -52,10 +47,6 @@ int i2c_read(unsigned char dev_addr, unsigned char reg_addr, unsigned char* data
 		fprintf(stderr, "i2c_read  read error %d\n",ret);
 		return -2;
 	}
-
-	// 受信データのエンディアン反転
-	for(i=0;i<length;i++)
-		memcpy(&data[i], &buff[length -i -1],1);
 
 
 	close(fd);
@@ -77,9 +68,8 @@ int i2c_write(unsigned char dev_addr, unsigned char reg_addr, unsigned char* dat
 	// 送信データの先頭をレジスタアドレスに
 	buff[0] = reg_addr;
 
-	// 送信データのエンディアン反転
-	for(i=0;i<length;i++)
-		memcpy(&buff[i+1], &data[length-i-1],1);
+	// 送信データのコピー 
+	memcpy(&buff[i+1], data,length);
 
 	fd = open(I2C_DEV_NAME, O_RDWR);
 	if(fd == -1)
