@@ -63,6 +63,11 @@ int i2c_write(unsigned char dev_addr, unsigned char* data, int length)
 	struct i2c_msg message;
 	struct i2c_rdwr_ioctl_data i2c_data;
 
+	for(i=0;i<length;i++)
+		printf("%x ",data[i]);
+
+	printf("\n");
+
 
 	fd = open(I2C_DEV_NAME, O_RDWR);
 	if(fd == -1)
@@ -73,7 +78,7 @@ int i2c_write(unsigned char dev_addr, unsigned char* data, int length)
 
 	message.addr = dev_addr;
 	message.flags = 0;
-	message.len = sizeof(buff);
+	message.len = sizeof(data);
 	message.buf = data;
 
 	i2c_data.msgs = &message;

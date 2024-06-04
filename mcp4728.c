@@ -5,10 +5,10 @@
 
 int output_da(int ch, float voltage)
 {
-	int ret=0;
+	int ret=0,i;
 	unsigned char dev_addr = MCP4728_ADDR;
-	unsigned char reg_addr;
 	mcp4728_config_data mcp4728;
+	unsigned char buf[3];
 
 	if(ch < CH_A || ch > CH_D)
 	{
@@ -30,17 +30,21 @@ int output_da(int ch, float voltage)
 		//printf("DACの出力範囲を超えています\n");
 	}
 
-	reg_addr = DAC_ADDRESS_BASE | ch<<1;
-
+	mcp4728.config.command = 0x0b;			//single mode
+	mcp4728.config.DAC=ch;
+	mcp4728.config.UDAC=EN_LATCH;
 	mcp4728.config.VREF = VREF_INTERNAL;
 	mcp4728.config.PD = PD_NORMAL;
 	mcp4728.config.Gx = GAIN_X2;
 
 	mcp4728.config.DAC_DATA = (int)(voltage * DAC_MAX_DATA / DAC_MAX_VOLT);
 
+	for(i=0;i<3;i++)
+		buf[i] = mcp4728.byte[3-1-i];
+
 
 //	printf("%x %x \n",reg_addr, mcp4728.i2c_data );
-	i2c_write(dev_addr, reg_addr, mcp4728.byte, sizeof(mcp4728.byte)); 
+	i2c_write(dev_addr, buf, sizeof(buf)); 
 
 	return ret;
 
@@ -109,6 +113,7 @@ int main(int argc, char *argv[])
 	voltage[CH_C] = 3.0;
 	voltage[CH_D] = 2.0;
 
-	output_da_fast(voltage);
+//	output_da_fast(voltage);
+	output_da(1,0);
 	return 0;
 }

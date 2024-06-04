@@ -37,8 +37,8 @@
 
 typedef union
 {
-	unsigned short i2c_data;
-	unsigned char byte[2];
+	unsigned int i2c_data;
+	unsigned char byte[3];
 
 	struct
 	{
@@ -46,7 +46,9 @@ typedef union
 		unsigned int Gx:1;
 		unsigned int PD:2;
 		unsigned int VREF:1;
-
+		unsigned int UDAC:1;
+		unsigned int DAC:2;
+		unsigned int command:5;
 	}config;
 }mcp4728_config_data;
 
