@@ -55,21 +55,14 @@ int i2c_read(unsigned char dev_addr, unsigned char reg_addr, unsigned char* data
 	return 0;
 }
 
-int i2c_write(unsigned char dev_addr, unsigned char reg_addr, unsigned char* data, int length)
+int i2c_write(unsigned char dev_addr, unsigned char* data, int length)
 {
 	int fd;
 	int ret;
 	int i;
 	struct i2c_msg message;
 	struct i2c_rdwr_ioctl_data i2c_data;
-	unsigned char* buff;
 
-	buff = (unsigned char *)malloc(length+1);
-	// 送信データの先頭をレジスタアドレスに
-	buff[0] = reg_addr;
-
-	// 送信データのコピー 
-	memcpy(&buff[i+1], data,length);
 
 	fd = open(I2C_DEV_NAME, O_RDWR);
 	if(fd == -1)
@@ -81,7 +74,7 @@ int i2c_write(unsigned char dev_addr, unsigned char reg_addr, unsigned char* dat
 	message.addr = dev_addr;
 	message.flags = 0;
 	message.len = sizeof(buff);
-	message.buf = buff;
+	message.buf = data;
 
 	i2c_data.msgs = &message;
 	i2c_data.nmsgs = 1;
