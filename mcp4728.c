@@ -50,11 +50,40 @@ int main(int argc, char *argv[])
 	float voltage;
 	int ch;
 	char *endptr;
+	unsigned char dev_addr = MCP4728_ADDR;
+	unsigned char reg_addr;
+	unsigned char send_data[7];
 
-	ch = strtol(argv[1], &endptr,10);
-	voltage =strtof(argv[2],&endptr);
+//	ch = strtol(argv[1], &endptr,10);
+//	voltage =strtof(argv[2],&endptr);
 
 
-	output_da(ch, voltage);
+//	output_da(ch, voltage);
+	while(1)
+	{
+		reg_addr = 0x03;
+		send_data[0] = 0xFF;
+		send_data[1] = 0x03;
+		send_data[2]= 0xFF;
+		send_data[3] = 0x03;
+		send_data[4] = 0xFF;
+		send_data[5] = 0x03;
+		send_data[6] = 0xFF;
+		i2c_write(dev_addr, reg_addr , send_data, sizeof(send_data));
+
+
+		reg_addr = 0x00;
+		send_data[0] = 0x00;
+		send_data[1] = 0x00;
+		send_data[2]= 0x00;
+		send_data[3] = 0x00;
+		send_data[4] = 0x00;
+		send_data[5] = 0x00;
+		send_data[6] = 0x00;
+		i2c_write(dev_addr, reg_addr , send_data, sizeof(send_data));
+	}
+
+	
+
 	return 0;
 }
