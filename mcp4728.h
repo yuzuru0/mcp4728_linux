@@ -52,22 +52,17 @@ typedef union
 	}config;
 }mcp4728_config_data;
 
-typedef union 
+
+typedef union
 {
-	unsigned short input_register;
+	unsigned short fast_command;
+	unsigned char byte[2];
 	struct
 	{
 		unsigned short DAC_DAT:12;
 		unsigned short PD:2;
 		unsigned short command:2;
 	}config;
-}ch_dat;
-
-typedef union
-{
-	unsigned long fast_command;
-	unsigned char byte[8];
-	ch_dat ch[4]; 
 }fastmode_data;
 
 int output_da(int ch, float voltage);
