@@ -46,32 +46,69 @@ int output_da(int ch, float voltage)
 
 }
 
-int output_da_fast(float ch_a, float ch_b, float ch_c, float ch_d)
+int output_da_fast(float voltage[])
 {
 	int ret=0,i;
 	unsigned char dev_addr = MCP4728_ADDR;
 	unsigned char reg_addr;
 	fastmode_data data;
-
+/*
 	for(i=0;i<MAX_CH; i++)
 	{
 		data.ch[i].config.command=0;
 		data.ch[i].config.PD=0;
+
+		if(voltage[i] < DAC_MIN_VOLT)
+		{
+			ret = -2;
+			voltage[i] = DAC_MIN_VOLT;
+			//printf("DACの出力範囲を超えています\n");
+		}
+
+		if(voltage[i] > DAC_MAX_VOLT)
+		{
+			ret = -3;
+			voltage[i] = DAC_MAX_VOLT;
+			//printf("DACの出力範囲を超えています\n");
+		}
+
+		data.ch[i].config.DAC_DAT = (int)(voltage[i]* DAC_MAX_DATA / DAC_MAX_VOLT);
 	}
+*/
+
+	data.ch[CH_A].config.command=0;
+	data.ch[CH_A].config.PD=0;
+	data.ch[CH_A].config.DAC_DAT = 0xfff;
+
+
+	data.ch[CH_B].config.command=0;
+	data.ch[CH_B].config.PD=0;
+	data.ch[CH_B].config.DAC_DAT = 0x7ff;
+
+	printf("%lx\t",data);
+	for(i=0;i<8;i++)
+		printf("%x ",data.byte[i]);
+
+	printf("\n");
+
 
 	return ret;
 }
 
 int main(int argc, char *argv[])
 {
-	float voltage;
+	float voltage[4];
 	int ch;
 	char *endptr;
 
-	ch = strtol(argv[1], &endptr,10);
-	voltage =strtof(argv[2],&endptr);
+//	ch = strtol(argv[1], &endptr,10);
+//	voltage =strtof(argv[2],&endptr);
 
+	voltage[CH_A] = 5.0;
+	voltage[CH_B] = 4.0;
+	voltage[CH_C] = 3.0;
+	voltage[CH_D] = 2.0;
 
-	output_da(ch, voltage);
+	output_da_fast(voltage);
 	return 0;
 }
