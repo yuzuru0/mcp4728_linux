@@ -59,9 +59,9 @@ typedef union
 	unsigned char byte[2];
 	struct
 	{
-		unsigned short DAC_DAT:12;
-		unsigned short PD:2;
-		unsigned short command:2;
+		unsigned int DAC_DAT:12;
+		unsigned int PD:2;
+		unsigned int command:2;
 	}config;
 }fastmode_data;
 
