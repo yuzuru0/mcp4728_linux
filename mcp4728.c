@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "mcp4728.h"
 #include "i2c_interface.h"
 
@@ -43,6 +44,9 @@ int output_da(int ch, float voltage)
 	for(i=0;i<3;i++)
 		buf[i] = mcp4728.byte[3-1-i];
 
+	// ビッグエンディアンの場合は変換しない
+	// memcpy(buf,mcp4728.byte, sizeof(mcp4728.byte));
+
 
 	i2c_write(dev_addr, buf, sizeof(buf)); 
 
@@ -85,6 +89,9 @@ int output_da_fast(float voltage[])
 		// エンディアン変換しながら全送信データ結合
 		for(i=0;i<2;i++)
 			buf[j*2 +i] = data[j].byte[1-i];
+
+		// ビッグエンディアンの場合は変換しない
+		// memcpy(&buf[j*2],data[j].byte, sizeof(data[j].byte));
 	}
 
 
